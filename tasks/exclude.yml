@@ -1,0 +1,28 @@
+---
+# code: language=ansible
+- name: Check required exclude variables
+  when: required_var not in exclude
+  ansible.builtin.fail:
+    msg: "Variable 'exclude.{{ required_var }}' must be defined"
+  loop:
+    - path
+    - rules
+  loop_control:
+    loop_var: required_var
+
+- name: Disable exclude for {{ exclude.path }}
+  when:
+    - exclude.enabled is defined
+    - not exclude.enabled
+  ansible.builtin.file:
+    path: "{{ exclude.path }}/.pxarexclude"
+    state: absent
+    mode: "0644"
+
+- name: Configure rules for {{ exclude.path }}
+  when: exclude.enabled is not defined or exclude.enabled
+  ansible.builtin.blockinfile:
+    create: true
+    path: "{{ exclude.path }}/.pxarexclude"
+    block: "{{ exclude.rules | join('\n') }}"
+    mode: "0644"

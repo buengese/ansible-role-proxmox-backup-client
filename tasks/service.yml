@@ -1,6 +1,15 @@
 ---
-- name: setup Proxmox Backup systemd
-  template:
+# code: language=ansible
+- name: Generate env files
+  ansible.builtin.template:
+    src: pbs-env.j2
+    dest: /etc/pbs-env
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Setup Proxmox Backup systemd
+  ansible.builtin.template:
     src: "{{ item.template }}"
     dest: "{{ item.service }}"
     owner: root
@@ -14,10 +23,9 @@
     - template: timer.j2
       service: /etc/systemd/system/proxmox-backup-client.timer
 
-- name: enable and start Proxmox Backup timer
-  systemd:
+- name: Enable and start Proxmox Backup timer
+  ansible.builtin.systemd:
     name: "proxmox-backup-client.timer"
     state: started
-    enabled: yes
-    daemon_reload: yes
-    no_block: yes
+    enabled: true
+    daemon_reload: true

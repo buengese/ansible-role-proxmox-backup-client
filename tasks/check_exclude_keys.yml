@@ -1,0 +1,9 @@
+---
+# code: language=ansible
+- name: Check required pbs.client.exclude dictionary keys
+  ansible.builtin.fail:
+    msg: "exclude.{{ required_key }} must be defined"
+  when: required_key not in exclude
+  with_items: "{{ required_pbs_exclude_keys }}"
+  loop_control:
+    loop_var: required_key

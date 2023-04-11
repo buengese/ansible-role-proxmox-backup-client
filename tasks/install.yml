@@ -1,0 +1,18 @@
+---
+# code: language=ansible
+- name: Update APT cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  register: _pre_update_apt_cache
+  until: _pre_update_apt_cache is succeeded
+  when:
+    - ansible_pkg_mgr == 'apt'
+
+- name: Install unbound package
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ pbs_packages }}"

@@ -1,0 +1,4 @@
+---
+pbs_packages:
+  - proxmox-backup-client
+  - expect

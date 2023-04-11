@@ -7,15 +7,7 @@ After=network-online.target
 [Service]
 Type=oneshot
 
-Environment=PBS_REPOSITORY={{ config.server.user }}@{{ config.server.host }}{% if config.server.port is defined %}:{{ config.server.port }}{% endif %}:{{ config.server.datastore }}
-Environment=PBS_PASSWORD={{ config.server.pass }}
-{% if config.server.fingerprint is defined %}Environment=PBS_FINGERPRINT={{ config.server.fingerprint }}{% endif %}
-
-{% if config.client.encrypt.pass is defined %}Environment=PBS_ENCRYPTION_PASSWORD={{ config.client.encrypt.pass }}{% endif %}
-{% if config.client.output.format is defined %}Environment=PBS_OUTPUT_FORMAT={{ config.client.output.format }}{% endif %}
-{% if config.client.output.border is defined %}Environment=PBS_OUTPUT_NO_BORDER={{ config.client.output.border }}{% endif %}
-{% if config.client.output.header is defined %}Environment=PBS_OUTPUT_NO_HEADER={{ config.client.output.header }}{% endif %}
-
+EnvironmentFile=/etc/pbs-env
 
 ExecStart=proxmox-backup-client backup \
 {% if config.server.encrypt.key is defined %}
