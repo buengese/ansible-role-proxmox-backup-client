@@ -1,6 +1,7 @@
 ---
 # code: language=ansible
-- ansible.builtin.import_tasks: dist_vars.yml
+- name: Gather variables for each operating system
+  ansible.builtin.include_vars: "{{ lookup('first_found', pbs_variables) }}"
 
 - ansible.builtin.import_tasks: validate_config.yml
 
