@@ -1,0 +1,15 @@
+---
+# code: language=ansible
+- name: Converge
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt cache.
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+
+  roles:
+    - role: ansible-role-proxmox-backup-client

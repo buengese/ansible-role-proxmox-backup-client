@@ -1,0 +1,19 @@
+---
+# code: language=ansible
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Gather the service facts
+      ansible.builtin.service_facts:
+
+    - name: Check if package is installed
+      ansible.builtin.fail:
+        msg: "proxmox-backup-client is not installed"
+      when: "'proxmox-backup-client' not in ansible_facts.packages"
