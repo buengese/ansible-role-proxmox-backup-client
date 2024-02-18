@@ -1,0 +1,34 @@
+---
+# code: language=ansible
+- name: Set keyring prefix
+  ansible.builtin.set_fact:
+    apt_keyring_prefix: /usr/share/keyrings
+  when: ansible_distribution_version is version_compare('9', '>=')
+
+
+- name: Set keyring prefix
+  ansible.builtin.set_fact:
+    apt_keyring_prefix: /etc/apt/trusted.gpg.d/
+  when: ansible_distribution_version is version_compare('9', '<')
+
+- name: Retrieve repository key from URL
+  ansible.builtin.get_url:
+    url: "{{ pbs_client_repository.gpg_url }}"
+    dest: "{{ apt_keyring_prefix }}/{{ pbs_client_repository.name }}.gpg"
+    checksum: "{{ pbs_client_repository.gpg_checksum }}"
+
+- name: Setup APT sources
+  ansible.builtin.apt_repository:
+    filename: "{{ pbs_client_repository.name }}"
+    repo: "deb {{ pbs_client_repository.uri }} {{ pbs_client_repository.suite }} {{ pbs_client_repository.components }}"
+    mode: 0444
+    state: present
+  when: ansible_distribution_version is version_compare('9', '<')
+
+- name: Setup APT sources
+  ansible.builtin.apt_repository:
+    filename: "{{ pbs_client_repository.name }}"
+    repo: "deb [signed-by=/usr/share/keyrings/{{ pbs_client_repository.name }}.gpg] {{ pbs_client_repository.uri }} {{ pbs_client_repository.suite }} {{ pbs_client_repository.components }}"
+    mode: 0444
+    state: present
+  when: ansible_distribution_version is version_compare('9', '>=')

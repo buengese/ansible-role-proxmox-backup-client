@@ -2,3 +2,31 @@
 pbs_packages:
   - proxmox-backup-client
   - expect
+
+pbs_repo_suite_map:
+  bookworm: 'bookworm'
+  bullseye: 'bullseye'
+  buster: 'buster'
+  focal: 'buster'
+  jammy: 'bookworm'
+  noble: 'bookworm'
+
+pbs_gpg_url_map:
+  bookworm: 'https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg'
+  bullseye: 'https://enterprise.proxmox.com/debian/proxmox-release-bullseye.gpg'
+  buster: 'https://enterprise.proxmox.com/debian/proxmox-ve-release-6.x.gpg'
+
+pbs_gpg_checksum_map:
+  bookworm: "sha512:7da6fe34168adc6e479327ba517796d4702fa2f8b4f0a9833f5ea6e6b48f6507a6da403a274fe201595edc86a84463d50383d07f64bdde2e3658108db7d6dc87"
+  bullseye: "sha512:7fb03ec8a1675723d2853b84aa4fdb49a46a3bb72b9951361488bfd19b29aab0a789a4f8c7406e71a69aabbc727c936d3549731c4659ffa1a08f44db8fdcebfa"
+  buster: "sha512:acca6f416917e8e11490a08a1e2842d500b3a5d9f322c6319db0927b2901c3eae23cfb5cd5df6facf2b57399d3cfa52ad7769ebdd75d9b204549ca147da52626"
+
+pbs_repo_codename: "{{ pbs_repo_suite_map[ansible_distribution_release] }}"
+
+pbs_client_repository:
+  name: proxmox-backup-client
+  uri: http://download.proxmox.com/debian/pbs-client
+  suite: "{{ pbs_repo_codename }}"
+  components: main
+  gpg_url: "{{ pbs_gpg_url_map[pbs_repo_codename] }}"
+  gpg_checksum: "{{ pbs_gpg_checksum_map[pbs_repo_codename] }}"

@@ -1,7 +1,3 @@
-# required_vars:
-#   - proxmox_backup_user
-#   - proxmox_backup_pass
-
 # Keys required to be set in a proxmox_backup.server dictionary
 required_pbs_server_keys:
   - user # Example, backup@pbs
