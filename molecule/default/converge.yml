@@ -13,3 +13,15 @@
 
   roles:
     - role: ansible-role-proxmox-backup-client
+  vars:
+    proxmox_backup:
+      server:
+        user: backup@pbs
+        pass: bla
+        host: pbs.example.com
+        datastore: bla
+      client:
+        archives:
+          - name: root
+            path: /
+            format: .pxar
