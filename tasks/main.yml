@@ -3,30 +3,34 @@
 - name: Gather variables for each operating system
   ansible.builtin.include_vars: "{{ lookup('first_found', pbs_variables) }}"
 
-- ansible.builtin.import_tasks: validate_config.yml
-
 - ansible.builtin.include_tasks: setup_repo.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and pbs_configure_repo
 
 - ansible.builtin.import_tasks: install.yml
   when: ansible_os_family == 'Debian'
 
-- name: Configure encryption
-  when:
-    - config.client.encrypt is defined
-    - config.client.encrypt.enable
-  ansible.builtin.include_tasks: encryption.yaml
+- name: Configure Proxmox Backup Client
+  when: pbs_configure
+  block:
+    - name: Validating Configuration
+      ansible.builtin.import_tasks: validate_config.yml
 
-- name: Add Exclusions
-  ansible.builtin.include_tasks: exclude.yaml
-  loop: "{{ config.client.exclude }}"
-  loop_control:
-    loop_var: exclude
-  when: config.client.exclude is defined
+    - name: Configure encryption
+      when:
+        - config.client.encrypt is defined
+        - config.client.encrypt.enable
+      ansible.builtin.include_tasks: encryption.yaml
 
-- name: Debug Config
-  ansible.builtin.debug:
-    var: config.client
+    - name: Add Exclusions
+      ansible.builtin.include_tasks: exclude.yaml
+      loop: "{{ config.client.exclude }}"
+      loop_control:
+        loop_var: exclude
+      when: config.client.exclude is defined
+
+    - name: Debug Config
+      ansible.builtin.debug:
+        var: config.client
 
 - name: Configure service
   ansible.builtin.include_tasks: service.yaml

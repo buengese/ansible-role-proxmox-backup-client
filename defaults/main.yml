@@ -1,3 +1,9 @@
+# Should this role configure the proxmox backup client APT repo
+pbs_configure_repo: true
+
+# Should this role configure proxmox backup client
+pbs_configure: true
+
 # Keys required to be set in a proxmox_backup.server dictionary
 required_pbs_server_keys:
   - user # Example, backup@pbs
