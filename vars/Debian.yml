@@ -8,7 +8,6 @@ pbs_repo_suite_map:
   bullseye: 'bullseye'
   buster: 'buster'
   focal: 'buster'
-  jammy: 'bookworm'
   noble: 'bookworm'
 
 pbs_gpg_url_map:

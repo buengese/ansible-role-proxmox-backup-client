@@ -16,7 +16,6 @@ jobs:
         distro:
           - debian12
           - debian11
-          - ubuntu2204
 
     steps:
       - name: Check out the codebase.

@@ -8,9 +8,8 @@ galaxy_info:
     - name: ArchLinux
     - name: Ubuntu
       versions:
-        - "bionic"
         - "focal"
-        - "jammy"
+        - "noble"
     - name: Debian
       versions:
         - "buster"
