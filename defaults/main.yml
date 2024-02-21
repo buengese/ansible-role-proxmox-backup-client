@@ -1,6 +1,9 @@
 # Should this role configure the proxmox backup client APT repo
 pbs_configure_repo: true
 
+# Should this role install the proxmox-backup-client via the package manager
+pbs_install: true
+
 # Should this role configure proxmox backup client
 pbs_configure: true
 

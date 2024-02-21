@@ -7,7 +7,7 @@
   when: ansible_os_family == 'Debian' and pbs_configure_repo
 
 - ansible.builtin.import_tasks: install.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and pbs_install
 
 - name: Configure Proxmox Backup Client
   when: pbs_configure
