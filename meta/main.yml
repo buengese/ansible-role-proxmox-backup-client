@@ -1,5 +1,7 @@
+dependencies: []
+
 galaxy_info:
-  name: Proxmox Backup Client
+  role_name: proxmox_backup_client
   description: Ansible role for installing and configuring the Proxmox Backup Client
   author: buengese
   license: MIT
@@ -9,12 +11,11 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - "focal"
-        - "noble"
     - name: Debian
       versions:
         - "buster"
         - "bullseye"
+        - "bookworm"
   galaxy_tags:
     - backup
     - proxmox
-dependencies: []
