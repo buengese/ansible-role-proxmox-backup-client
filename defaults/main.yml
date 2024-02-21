@@ -17,6 +17,7 @@ required_pbs_server_keys:
 # Optional keys on the proxmox_backup.server dictionary
 # - port # Set if not default of 8007
 # - fingerprint # When set, this value is used to verify the server certificate (only used if the system CA certificates cannot validate the certificate).
+# - namespace # The namespace to save backups in
 
 # Keys required to be set in a proxmox_backup.client dictionary
 required_pbs_client_keys:

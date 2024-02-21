@@ -13,6 +13,9 @@ ExecStart=proxmox-backup-client backup \
 {% if config.server.encrypt.key is defined %}
                 --keyfile {{ config.client.encrypt.key }} \
 {% endif %}
+{% if config.server.namespace is defined %}
+                --ns {{ config.server.namespace }}
+{% endif %}
 {% if config.client.skip_lost_found is defined %}
                 --skip-lost-and-found true \
 {% endif %}
