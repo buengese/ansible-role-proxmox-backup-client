@@ -19,10 +19,10 @@
       when:
         - config.client.encrypt is defined
         - config.client.encrypt.enable
-      ansible.builtin.include_tasks: encryption.yaml
+      ansible.builtin.include_tasks: encryption.yml
 
     - name: Add Exclusions
-      ansible.builtin.include_tasks: exclude.yaml
+      ansible.builtin.include_tasks: exclude.yml
       loop: "{{ config.client.exclude }}"
       loop_control:
         loop_var: exclude
@@ -33,4 +33,4 @@
         var: config.client
 
 - name: Configure service
-  ansible.builtin.include_tasks: service.yaml
+  ansible.builtin.include_tasks: service.yml

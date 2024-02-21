@@ -17,13 +17,13 @@
     loop_var: required_key
 
 - name: Check required proxmox_backup.archive dictionary keys
-  ansible.builtin.include_tasks: check_archive_keys.yaml
+  ansible.builtin.include_tasks: check_archive_keys.yml
   with_items: "{{ proxmox_backup.client.archives }}"
   loop_control:
     loop_var: archive
 
 - name: Check required proxmox_backup.exclude dictionary keys
-  ansible.builtin.include_tasks: check_exclude_keys.yaml
+  ansible.builtin.include_tasks: check_exclude_keys.yml
   with_items: "{{ proxmox_backup.client.exclude }}"
   loop_control:
     loop_var: exclude
